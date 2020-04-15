@@ -11,7 +11,6 @@
 
 problem1(Teas) :-
   problem1Setup(Teas),
-  problem1Solve(Teas),
   problem1Print(Teas).
 
 problem1Setup(Teas) :-
@@ -21,9 +20,8 @@ problem1Setup(Teas) :-
   BadTea #>= 0,
   BestTea + GoodTea + BadTea #= 20,
 
-  ((BestTea * 60) + (GoodTea * 54) + (BadTea * 42)) / 3 #= 57.
+  ((BestTea * 60) + (GoodTea * 54) + (BadTea * 42)) / 20 #= 57,
 
-problem1Solve(Teas) :-
   minimize(labeling(Teas), BestTea).
 
 problem1Print(Teas) :-
