@@ -4,7 +4,7 @@
 :- lib(fd).
 :- lib(fd_search).
 
-      /* Problem 1*/
+      /* Problem 1 */
 
 /* 2s 6d = 60 pence */
 /* 2s 3d = 54 pence */
@@ -33,6 +33,25 @@ problem1Print(Teas) :-
   printf("Bad Tea: %3d\n", [BadTea]).
 
       /* Problem 2 */
+
+problem2(Barrels) :-
+  problem2Setup(Barrels).
+
+problem2Setup(Barrels) :-
+  Barrels = [Wine1, Wine2, Wine3, Wine4, Wine5, Beer],
+  Barrels #:: [15, 19, 31, 20, 16, 18],
+  alldifferent(Barrels),
+
+  119 - Beer #= X,
+
+  Wine1 + Wine2 #= Y,
+
+  Wine3 + Wine4 + Wine5 #= (2 * Y),
+
+  labeling(Barrels),
+
+  printf("Beer: %3d\n", [Beer]).
+
       /* Problem 3 */
 
 problem3(Digits) :-
@@ -53,7 +72,7 @@ problem3Solve(Digits) :-
   labeling(Digits).
 
 problem3Maximize(Digits, Product) :-
-  /* Can't figure out why -Product doesn't work.*/
+  /* Can't figure out why -Product doesn't work. */
   minimize(labeling(Digits), Product).
 
 problem3Print(Digits, Product) :-
@@ -74,12 +93,22 @@ problem4Setup(Basket, Eggs) :-
   Basket = [Eggs],
 
   /* What's the correct syntax for constraining via mod? */
-  mod(Eggs, 2) #= 1,
+
+  /* Eggs mod 2 #= 1,
   mod(Eggs, 3) #= 1,
   mod(Eggs, 4) #= 1,
   mod(Eggs, 5) #= 1,
   mod(Eggs, 6) #= 1,
-  mod(Eggs, 7) #= 0,
+  mod(Eggs, 7) #= 0, */
+
+  Eggs #= (A * 2) + 1,
+  Eggs #= (B * 3) + 1,
+  Eggs #= (C * 4) + 1,
+  Eggs #= (D * 5) + 1,
+  Eggs #= (E * 6) + 1,
+  Eggs #= F * 7,
+
+  Eggs #> 0,
 
   minimize(labeling(Basket), Eggs).
 
@@ -88,13 +117,39 @@ problem4Print(Eggs) :-
 
       /* Problem 5 */
 
-/* problem5(Trusses) :-
-  problem5Setup(Trusses),
-  problem5Print(Trusses).
+problem5(Trusses) :-
+  problem5Setup(Trusses).
 
 problem5Setup(Trusses) :-
   Trusses = [A, B, C, D, E],
-  Products #:: [110, 112, 113, 114, 115, 116, 117, 118, 120, 121], */
+  Products = [AB, AC, AD, AE, BC, BD, BE, CD, CE, DE],
+  Products #:: [110, 112, 113, 114, 115, 116, 117, 118, 120, 121],
+
+  AB #= A + B,
+  AC #= A + C,
+  AD #= A + D,
+  AE #= A + E,
+  BC #= B + C,
+  BD #= B + D,
+  BE #= B + E,
+  CD #= C + D,
+  CE #= C + E,
+  DE #= D + E,
+
+  /* A + B #:: Products,
+  A + C #:: Products,
+  A + D #:: Products,
+  A + E #:: Products,
+  B + C #:: Products,
+  B + D #:: Products,
+  B + E #:: Products,
+  C + D #:: Products,
+  C + E #:: Products,
+  D + E #:: Products, */
+
+  alldifferent(Products),
+
+  labeling(Trusses).
 
       /* Problem 6 */
 
@@ -106,7 +161,7 @@ problem6Setup(Letters, Planets) :-
   Letters = [P, L, U, T, O, R, A, N, S, E, J, I, M, H, V, C, Y],
 
   /* How to make each element of Letters positive? */
-  Letters #>= 0,
+  Letters #:: [0..50],
 
   P + L + U + T + O #= 40,
   U + R + A + N + U + S #= 36,
@@ -122,7 +177,7 @@ problem6Setup(Letters, Planets) :-
 
   labeling(Letters),
 
-  Planets = P + L + A + N + E + T + S.
+  Planets is (P + L + A + N + E + T + S).
 
 problem6Print(Planets) :-
-  printf("PLANETS: %3d\n", [Planets]).
+  printf("PLANETS: %3d\n", Planets).
