@@ -1,5 +1,12 @@
 /* Koby Tseng, Sergei Bondarenko, Emi Eliason */
 
+/* Notes from office hours session
+– Consolidate all problems to one method
+- Problem 7: Write out every variable
+- 
+
+*/
+
 :- lib(lists).
 :- lib(fd).
 :- lib(fd_search).
@@ -35,9 +42,6 @@ problem1Print(Teas) :-
       /* Problem 2 */
 
 problem2(Barrels) :-
-  problem2Setup(Barrels).
-
-problem2Setup(Barrels) :-
   Barrels = [Wine1, Wine2, Wine3, Wine4, Wine5, Beer],
   Barrels #:: [15, 19, 31, 20, 16, 18],
   alldifferent(Barrels),
@@ -72,8 +76,9 @@ problem3Solve(Digits) :-
   labeling(Digits).
 
 problem3Maximize(Digits, Product) :-
+  Product1 #= -1 * Product,
   /* Can't figure out why -Product doesn't work. */
-  minimize(labeling(Digits), Product).
+  minimize(labeling(Digits), Product1).
 
 problem3Print(Digits, Product) :-
   Digits = [Num1Dig1, Num1Dig2, Num1Dig3, Num2Dig1, Num2Dig2, Num3Dig1, Num3Dig2, Num4Dig1, Num4Dig2],
