@@ -241,7 +241,6 @@ problem7(Casks) :-
   labeling(N4),
   labeling(N5).
 
-
 problem8(Grid):-
 
 	Grid = [S11, S12, S13, S14, S15, S16, S17, S18,
